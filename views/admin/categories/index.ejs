@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('../../partials/head.ejs') %>
+
+    <body>
+        <%- include ('../../partials/navbar.ejs') %>
+            <div class="container">
+                <h2 class="mb-2">Categorias</h2>
+                <a href="/admin/categories/new" class="btn btn-success mb-4">Criar nova categoria</a>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                id
+                            </th>
+                            <th>
+                                Título
+                            </th>
+                            <th>
+                                Slug
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% categories.forEach((category)=> { %>
+                            <tr>
+                                <th class="text-center">
+                                    <%= category.id %>
+                                </th>
+                                <th>
+                                    <%= category.title %>
+                                </th>
+                                <th>
+                                    <%= category.slug %>
+                                </th>
+                                <th class="d-flex justify-content-center gap-2">
+                                    <a href="/admin/categories/edit/<%= category.id %>"
+                                        class="btn btn-warning">Editar</a>
+                                    <form action="/categories/delete" method="POST" onSubmit="deleteAlert(event, this)">
+                                        <input type="hidden" name="id" value="<%= category.id %>" style="display: none">
+                                        <button class="btn btn-danger">Deletar</button>
+                                    </form>
+                                </th>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <%- include('../../partials/bootstrapScript.ejs') %>
+                <script>
+                    function deleteAlert(event, form) {
+                        event.preventDefault();
+                        const decision = confirm('Deseja mesmo deletar essa categoria?');
+                        if (decision) {
+                            form.submit();
+                        }
+                    }
+                </script>
+    </body>
+
+</html>

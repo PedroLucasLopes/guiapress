@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include ('../../partials/head.ejs') %>
+
+    <body>
+        <%- include ('../../partials/navbar.ejs') %>
+            <div class="container d-flex justify-content-center">
+                <div class="card w-50">
+                    <div class="card-header">
+                        <h2 class="text-center">Cadastro de categoria</h2>
+                    </div>
+                    <div class="card-body">
+                        <form class="mt-2 d-flex flex-column" method="POST" action="/categories/save">
+                            <input type="text" name="title" placeholder="Defina o título da categoria"
+                                class="form-control mb-3">
+                            <button class="btn btn-primary w-25">
+                                Cadastrar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <%- include ('../../partials/bootstrapScript.ejs') %>
+    </body>
+
+</html>

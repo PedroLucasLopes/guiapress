@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<%- include ('partials/head.ejs') %>
+<%- include ('../../partials/head.ejs') %>
 
     <body>
-        <%- include ('partials/homenavbar.ejs') %>
+        <%- include ('../../partials/homenavbar.ejs') %>
             <div class="container">
-                <% articles.forEach((article)=> {%>
+                <% result.articles.rows.forEach((article)=> {%>
                     <div class="card mb-3">
                         <div class="card-header h-50 d-flex align-items-center">
                             <p class="text-start pt-3">
@@ -18,7 +18,7 @@
                     </div>
                     <% }) %>
             </div>
-            <%- include ('partials/bootstrapScript.ejs') %>
+            <%- include ('../../partials/bootstrapScript.ejs') %>
     </body>
 
 </html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include ('../../partials/head.ejs') %>
+
+    <body>
+        <%- include ('../../partials/navbar.ejs') %>
+            <div class="container d-flex justify-content-center mb-3">
+                <div class="card w-50">
+                    <div class="card-header">
+                        <h2 class="text-center">Edição de Artigo</h2>
+                    </div>
+                    <div class="card-body">
+                        <form class="mt-2 d-flex flex-column" method="POST" action="/articles/update">
+                            <h5 class="text-center">
+                                Artigo Atual:
+                            </h5>
+                            <p class="text-center">
+                                <%= article.title %>
+                            </p>
+                            <input type="text" name="title" placeholder="Edite o novo título do artigo"
+                                class="form-control mb-3">
+                            <textarea class="form-control" name="body" id="articleEdit"></textarea>
+                            <select name="category" id="category" class="form-control mt-3">
+                                <% categories.forEach(category=> {%>
+                                    <%if(category.id==article.categoryId) {%>
+                                        <option value="<%= category.id %>" selected>
+                                            <%= category.title %>
+                                        </option>
+                                        <%}else {%>
+                                            <option value="<%= category.id %>">
+                                                <%= category.title %>
+                                            </option>
+                                            <%}%>
+                                                <%})%>
+                            </select>
+                            <input type="hidden" name="id" value="<%= article.id %>">
+                            <button class="btn btn-primary w-25 mt-3">
+                                Atualizar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content" style="display: none;">
+                <%- article.body %>
+            </div>
+
+            <%- include ('../../partials/bootstrapScript.ejs') %>
+                <script src="/tinymce/tinymce.min.js"></script>
+                <script>
+                    tinymce.init({
+                        language: 'pt_BR',
+                        selector: '#articleEdit',
+                        plugins: [
+                            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+                        ],
+                        init_instance_callback: () => {
+                            tinymce.get('articleEdit').setContent($('#content').html());
+                        }
+                    });
+                </script>
+    </body>
+
+</html>

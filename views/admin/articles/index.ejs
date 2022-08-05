@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('../../partials/head.ejs') %>
+
+    <body>
+        <%- include ('../../partials/navbar.ejs') %>
+            <div class="container">
+                <h2 class="mb-2">Artigos</h2>
+                <a href="/admin/articles/new" class="btn btn-success mb-4">Criar novo Artigo</a>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                id
+                            </th>
+                            <th>
+                                Título
+                            </th>
+                            <th>
+                                Slug
+                            </th>
+                            <th>
+                                category
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%articles.forEach((article)=> {%>
+                            <tr>
+                                <td class="text-center">
+                                    <%= article.id %>
+                                </td>
+                                <td>
+                                    <%= article.title %>
+                                </td>
+                                <td>
+                                    <%= article.slug %>
+                                </td>
+                                <td>
+                                    <%= article.category.title %>
+                                </td>
+                                <td class="d-flex justify-content-center gap-2">
+                                    <a href="/admin/article/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
+                                    <form action="/articles/delete" method="POST" onSubmit="deleteAlert(event, this)">
+                                        <input type="hidden" name="id" value="<%= article.id %>" style="display: none">
+                                        <button class="btn btn-danger">Deletar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%})%>
+                    </tbody>
+                </table>
+            </div>
+            <%- include('../../partials/bootstrapScript.ejs') %>
+                <script>
+                    function deleteAlert(event, form) {
+                        event.preventDefault();
+                        const decision = confirm('Deseja mesmo deletar esse Artigo?');
+                        if (decision) {
+                            form.submit();
+                        }
+                    }
+                </script>
+    </body>
+
+</html>
