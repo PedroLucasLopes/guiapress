@@ -1,15 +1,26 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 const connection = require('./database/database');
 const categoriesController = require('./categories/CategoriesController');
 const articlesController = require('./articles/ArticlesController');
+const userController = require('./User/userController');
 
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const User = require('./User/User');
 
 //view engine
 app.set('view engine', 'ejs');
+
+//sessions
+app.use(session({
+    secret: 'o9fjfiofashdfjkfhweoi9jf',
+    cookie: {
+        maxAge: 30000000
+    }
+}));
 
 //static
 app.use(express.static('public'));
@@ -31,6 +42,7 @@ connection
 //Using routes of different files
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', userController);
 
 //home
 app.get('/', (req, res) => {

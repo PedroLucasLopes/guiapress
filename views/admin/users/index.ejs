@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%-include('../../partials/head.ejs')%>
+
+    <body>
+        <%-include('../../partials/navbar.ejs')%>
+            <div class="container">
+                <h2 class="mb-2">Usuários</h2>
+                <a href="/admin/users/create" class="btn btn-success mb-4">Criar Novo Usuário</a>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>    
+                            <th>
+                                id
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((user)=> { %>
+                            <tr>
+                                <th class="text-center">
+                                    <%= user.id %>
+                                </th>
+                                <th>
+                                    <%= user.email %>
+                                </th>
+                                <th class="d-flex justify-content-center gap-2">
+                                    <a href="/admin/users/edit/<%= user.id %>" class="btn btn-warning">Editar</a>
+                                    <form action="/users/delete" method="POST" onSubmit="deleteAlert(event, this)">
+                                        <input type="hidden" name="id" value="<%= user.id %>" style="display: none">
+                                        <button class="btn btn-danger">Deletar</button>
+                                    </form>
+                                </th>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <%-include('../../partials/bootstrapScript.ejs')%>
+
+                <script>
+                    function deleteAlert(event, form) {
+                        event.preventDefault();
+                        const decision = confirm('Deseja mesmo deletar esse usuário?');
+                        if (decision) {
+                            form.submit();
+                        }
+                    }
+                </script>
+    </body>
+
+</html>
